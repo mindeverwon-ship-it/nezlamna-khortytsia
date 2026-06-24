@@ -1,0 +1,455 @@
+/* ============================================================
+   НЕЗЛАМНА ХОРТИЦЯ — документальний scroll story
+   Палітра: темно-зелений • природні відтінки • білий • жовто-блакитний акцент
+   ============================================================ */
+
+:root{
+  --green-900:#0B2818;
+  --green-800:#0F3D2E;
+  --green-700:#15543E;
+  --green-600:#1E7A52;
+  --green-500:#2E9E66;
+  --moss:#5B8C5E;
+  --sand:#E9E3D2;
+  --cream:#F7F5EE;
+  --white:#FFFFFF;
+  --ua-blue:#0057B7;
+  --ua-yellow:#FFD700;
+  --ink:#16241C;
+  --muted:#5d6b62;
+
+  --maxw:1200px;
+  --radius:18px;
+  --radius-lg:28px;
+  --shadow:0 18px 50px rgba(11,40,24,.18);
+  --shadow-soft:0 10px 30px rgba(11,40,24,.10);
+  --ease:cubic-bezier(.22,1,.36,1);
+
+  --font-head:"Unbounded",system-ui,sans-serif;
+  --font-body:"Manrope",system-ui,-apple-system,sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--font-body);
+  color:var(--ink);
+  background:var(--cream);
+  line-height:1.65;
+  overflow-x:hidden;
+  font-size:clamp(16px,1.05vw,18px);
+}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+
+.container{width:min(100% - 40px, var(--maxw));margin-inline:auto}
+
+/* ---------- Прогрес прокрутки ---------- */
+.scroll-progress{
+  position:fixed;top:0;left:0;height:4px;width:0;z-index:120;
+  background:linear-gradient(90deg,var(--ua-blue),var(--green-500),var(--ua-yellow));
+  transition:width .1s linear;
+}
+
+/* ---------- Навігація ---------- */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:110;
+  display:flex;align-items:center;justify-content:space-between;gap:18px;
+  padding:16px clamp(18px,4vw,42px);
+  transition:background .4s var(--ease), padding .4s var(--ease), box-shadow .4s var(--ease);
+}
+.nav.scrolled{
+  background:rgba(11,40,24,.82);
+  backdrop-filter:blur(14px);
+  padding-block:11px;
+  box-shadow:0 8px 30px rgba(0,0,0,.25);
+}
+.nav__brand{
+  display:flex;align-items:center;gap:10px;
+  font-family:var(--font-head);font-weight:700;color:#fff;
+  font-size:1.05rem;letter-spacing:.3px;
+}
+.nav__leaf{font-size:1.3rem;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4))}
+.nav__links{display:flex;gap:6px;flex-wrap:wrap}
+.nav__links a{
+  color:rgba(255,255,255,.86);font-size:.92rem;font-weight:600;
+  padding:8px 14px;border-radius:999px;transition:.25s var(--ease);
+}
+.nav__links a:hover,.nav__links a.active{color:#fff;background:rgba(255,255,255,.12)}
+.nav__actions{display:flex;align-items:center;gap:10px}
+.nav__qr{
+  display:flex;align-items:center;gap:6px;color:#fff;font-weight:700;font-size:.8rem;
+  padding:8px 13px;border-radius:999px;border:1.5px solid rgba(255,255,255,.35);transition:.25s var(--ease);
+}
+.nav__qr:hover{background:var(--ua-yellow);color:var(--green-900);border-color:var(--ua-yellow)}
+.nav__burger{display:none;flex-direction:column;gap:5px;padding:8px}
+.nav__burger span{width:26px;height:2.5px;background:#fff;border-radius:2px;transition:.3s var(--ease)}
+.nav__burger.open span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+.nav__burger.open span:nth-child(2){opacity:0}
+.nav__burger.open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+
+/* ---------- Кнопки ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:15px 32px;border-radius:999px;font-weight:700;font-size:1rem;
+  font-family:var(--font-body);transition:.3s var(--ease);
+}
+.btn--accent{background:var(--ua-yellow);color:var(--green-900);box-shadow:0 12px 30px rgba(255,215,0,.35)}
+.btn--accent:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(255,215,0,.5)}
+.btn--sm{padding:11px 22px;font-size:.9rem}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  position:relative;min-height:100svh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;
+  color:#fff;overflow:hidden;padding:120px 20px 80px;
+}
+/* Повнокадрове слайдшоу — фото показуються ПОВНІСТЮ, тло — розмита підкладка */
+.hero__slides{position:absolute;inset:0;z-index:-2;overflow:hidden;background:#07140c}
+.hero__slide{position:absolute;inset:0;opacity:0;transition:opacity 1.8s ease}
+.hero__slide.is-active{opacity:1}
+.hero__slide-bg{position:absolute;inset:-5%;background-size:cover;background-position:center;
+  filter:blur(34px) brightness(.42) saturate(1.15);transform:scale(1.12)}
+.hero__slide.is-active .hero__slide-bg{animation:heroBgKen 8s ease-out forwards}
+.hero__slide-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
+  filter:drop-shadow(0 30px 90px rgba(0,0,0,.55))}
+@keyframes heroBgKen{from{transform:scale(1.12)}to{transform:scale(1.26)}}
+.hero__overlay{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(120% 90% at 50% 10%, transparent 30%, rgba(11,40,24,.55) 100%),
+    linear-gradient(180deg, rgba(11,40,24,.5) 0%, rgba(11,40,24,.3) 45%, rgba(11,40,24,.88) 100%);
+}
+.hero__content{max-width:900px;position:relative}
+.hero__kicker{
+  display:inline-block;letter-spacing:.32em;text-transform:uppercase;
+  font-size:.78rem;font-weight:700;padding:8px 18px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.4);margin-bottom:26px;backdrop-filter:blur(4px);
+}
+.hero__title{
+  font-family:var(--font-head);font-weight:900;line-height:.95;
+  font-size:clamp(3.2rem,11vw,8.5rem);letter-spacing:-.02em;
+  text-shadow:0 14px 50px rgba(0,0,0,.45);
+}
+.hero__title::after{content:"";display:block;width:90px;height:5px;margin:28px auto 0;
+  border-radius:5px;background:linear-gradient(90deg,var(--ua-blue),var(--ua-yellow))}
+.hero__subtitle{
+  font-size:clamp(1.05rem,2.4vw,1.55rem);font-weight:300;
+  margin:26px auto 38px;max-width:620px;color:rgba(255,255,255,.94);
+  text-shadow:0 4px 20px rgba(0,0,0,.4);
+}
+.hero__scroll{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:9px;color:rgba(255,255,255,.85);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase}
+.hero__mouse{width:26px;height:42px;border:2px solid rgba(255,255,255,.7);border-radius:14px;display:flex;justify-content:center;padding-top:7px}
+.hero__mouse span{width:4px;height:9px;border-radius:3px;background:#fff;animation:scrollDot 1.6s infinite}
+@keyframes scrollDot{0%{opacity:0;transform:translateY(-4px)}40%{opacity:1}80%,100%{opacity:0;transform:translateY(10px)}}
+
+.leaves{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.leaves::before,.leaves::after{content:"🍃";position:absolute;font-size:2rem;opacity:.5;animation:floatLeaf 12s linear infinite}
+.leaves::before{left:12%;animation-delay:0s}
+.leaves::after{left:78%;font-size:1.4rem;animation-delay:5s}
+@keyframes floatLeaf{0%{top:-8%;transform:rotate(0) translateX(0)}100%{top:110%;transform:rotate(360deg) translateX(60px)}}
+
+/* ============================================================
+   СЕКЦІЇ — загальне
+   ============================================================ */
+.section{position:relative;padding:clamp(70px,10vw,140px) 0}
+.section--dark{background:var(--green-900);color:#fff}
+.section--green{background:linear-gradient(160deg,var(--green-800),var(--green-700));color:#fff}
+.section--story{background:
+  radial-gradient(60% 50% at 100% 0%, rgba(46,158,102,.10), transparent 60%),
+  linear-gradient(180deg,var(--cream),#fbfaf4)}
+
+.section__head{max-width:760px;margin:0 auto clamp(36px,5vw,60px);text-align:center}
+.section__sub{font-size:1.08rem;color:var(--muted);margin-top:14px}
+.section--dark .section__sub,.section--green .section__sub{color:rgba(255,255,255,.82)}
+
+.eyebrow{display:inline-block;font-weight:800;letter-spacing:.22em;text-transform:uppercase;
+  font-size:.76rem;color:var(--green-600);margin-bottom:14px}
+.eyebrow--light{color:var(--ua-yellow)}
+.eyebrow::before{content:"";display:inline-block;width:26px;height:2px;background:currentColor;vertical-align:middle;margin-right:10px}
+
+.h2{font-family:var(--font-head);font-weight:700;line-height:1.05;
+  font-size:clamp(2rem,5vw,3.4rem);letter-spacing:-.02em;color:var(--green-900)}
+.h2--light{color:#fff}
+
+.pull{
+  margin-top:26px;padding:20px 26px;border-left:4px solid var(--ua-yellow);
+  background:rgba(46,158,102,.10);border-radius:0 16px 16px 0;
+  font-family:var(--font-head);font-size:1.12rem;font-weight:600;color:var(--green-800);
+}
+.pull span{color:var(--green-600)}
+
+/* ============================================================
+   ДОРОЖНЯ КАРТА (roadmap)
+   ============================================================ */
+.roadmap{
+  list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;
+  max-width:920px;margin:0 auto;
+}
+.roadmap a{
+  display:inline-flex;align-items:center;padding:9px 18px;border-radius:999px;
+  background:#fff;border:1px solid rgba(46,158,102,.22);box-shadow:var(--shadow-soft);
+  font-weight:600;font-size:.86rem;color:var(--green-800);transition:.25s var(--ease);
+}
+.roadmap a:hover{transform:translateY(-3px);border-color:var(--green-500);color:var(--green-600)}
+
+/* ============================================================
+   ДОКУМЕНТАЛЬНІ РОЗДІЛИ (chapters)
+   ============================================================ */
+.story{position:relative;max-width:1080px;margin:clamp(50px,7vw,90px) auto 0;padding:0 20px}
+.story__spine{position:absolute;left:50%;top:0;bottom:0;width:3px;transform:translateX(-50%);
+  background:rgba(46,158,102,.18);border-radius:3px}
+.story__spine-fill{position:absolute;top:0;left:0;width:100%;height:0;border-radius:3px;
+  background:linear-gradient(180deg,var(--green-500),var(--ua-yellow))}
+
+.chapter{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,64px);align-items:center;
+  padding-block:clamp(40px,6vw,72px);position:relative}
+.chapter__media{position:relative;margin:0;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow);
+  background:#0b2818}
+/* Фото показуємо ПОВНІСТЮ, у натуральних пропорціях (без обрізки) */
+.chapter__media img{width:100%;height:auto;display:block}
+.chapter__caption{position:absolute;left:0;right:0;bottom:0;z-index:2;
+  padding:30px 18px 14px;color:#fff;font-size:.86rem;font-weight:600;letter-spacing:.01em;
+  background:linear-gradient(180deg,transparent,rgba(11,40,24,.82));text-align:left}
+.chapter__step{display:inline-block;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  font-size:.74rem;color:var(--green-600);margin-bottom:10px}
+.chapter__text h3{font-family:var(--font-head);font-weight:700;line-height:1.1;
+  font-size:clamp(1.5rem,3.5vw,2.3rem);color:var(--green-900);margin-bottom:14px}
+.chapter__text p{margin-top:12px;color:#36473d}
+.chapter__text .next{font-family:var(--font-head);font-weight:600;color:var(--green-600);font-size:1.12rem;margin-top:20px}
+
+/* крапка на хребті */
+.chapter::before{content:"";position:absolute;left:50%;top:50%;width:18px;height:18px;border-radius:50%;
+  transform:translate(-50%,-50%);background:var(--cream);border:4px solid var(--green-500);z-index:3;
+  box-shadow:0 0 0 6px rgba(46,158,102,.12);transition:.4s var(--ease)}
+.chapter.in::before{background:var(--ua-yellow);border-color:var(--ua-yellow)}
+
+/* парне — фото праворуч */
+.chapter:nth-child(even) .chapter__media{order:2}
+.chapter:nth-child(even) .chapter__text{order:1;text-align:right}
+
+/* ============================================================
+   РЕЗУЛЬТАТИ
+   ============================================================ */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:44px;text-align:center}
+.kpi{padding:28px 14px;border-radius:var(--radius);background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(6px)}
+.kpi__num{display:block;font-family:var(--font-head);font-weight:900;font-size:clamp(2.2rem,5vw,3.2rem);
+  color:var(--ua-yellow);line-height:1}
+.kpi__label{font-size:.92rem;color:rgba(255,255,255,.8);margin-top:8px;display:block}
+
+.results{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.result-card{
+  padding:30px 26px;border-radius:var(--radius);background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.14);transition:.3s var(--ease);position:relative;overflow:hidden;
+}
+.result-card::after{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;
+  background:linear-gradient(180deg,var(--ua-blue),var(--ua-yellow));opacity:.85}
+.result-card:hover{transform:translateY(-6px);background:rgba(255,255,255,.11)}
+.result-card__ico{font-size:2.2rem;display:block;margin-bottom:14px}
+.result-card h3{font-family:var(--font-head);font-size:1.18rem;color:#fff;margin-bottom:8px;line-height:1.25}
+.result-card p{color:rgba(255,255,255,.78);font-size:.96rem}
+
+/* ============================================================
+   ГАЛЕРЕЯ MASONRY + LIGHTBOX
+   ============================================================ */
+.masonry{column-count:3;column-gap:18px}
+.masonry__item{break-inside:avoid;margin-bottom:18px;border-radius:var(--radius);overflow:hidden;
+  box-shadow:var(--shadow-soft);cursor:zoom-in;position:relative}
+.masonry__item img{width:100%;display:block;transition:transform .6s var(--ease)}
+.masonry__item::after{content:"⤢";position:absolute;right:12px;bottom:10px;color:#fff;font-size:1.2rem;
+  opacity:0;transition:.3s;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+.masonry__item:hover img{transform:scale(1.05)}
+.masonry__item:hover::after{opacity:1}
+
+.lightbox{position:fixed;inset:0;z-index:200;background:rgba(7,20,12,.94);backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:.35s var(--ease)}
+.lightbox.open{opacity:1;visibility:visible}
+.lightbox__fig{max-width:90vw;max-height:86vh;text-align:center}
+.lightbox__fig img{max-width:90vw;max-height:80vh;border-radius:12px;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.lightbox__fig figcaption{color:#fff;margin-top:14px;font-size:.95rem;opacity:.85}
+.lightbox__close{position:absolute;top:22px;right:26px;color:#fff;font-size:2rem;line-height:1;opacity:.8;transition:.2s}
+.lightbox__close:hover{opacity:1;transform:scale(1.1)}
+.lightbox__nav{position:absolute;top:50%;transform:translateY(-50%);color:#fff;font-size:3rem;
+  width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.1);transition:.25s;opacity:.85}
+.lightbox__nav:hover{background:rgba(255,255,255,.22);opacity:1}
+.lightbox__prev{left:18px}.lightbox__next{right:18px}
+
+/* ============================================================
+   КОНТАКТИ + QR
+   ============================================================ */
+.contacts__grid{display:grid;grid-template-columns:1.2fr .8fr;gap:clamp(30px,5vw,60px);align-items:center}
+.contacts__list{list-style:none;margin:26px 0;display:flex;flex-direction:column;gap:14px}
+.contacts__list li{display:flex;align-items:center;gap:14px;font-size:1.05rem;color:rgba(255,255,255,.92)}
+.contacts__list a:hover{color:var(--ua-yellow)}
+.contacts__ico{font-size:1.3rem}
+.contacts__socials{display:flex;gap:12px;margin-top:8px}
+.soc{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.1);color:#fff;font-size:1.1rem;font-weight:700;transition:.25s}
+.soc:hover{background:var(--ua-yellow);color:var(--green-900);transform:translateY(-3px)}
+.soc--wide{width:auto;border-radius:999px;padding:0 22px;gap:9px;font-size:1rem}
+.soc--wide span{font-size:1.15rem}
+.contacts__qr{text-align:center;color:rgba(255,255,255,.85)}
+.qr-box{display:inline-block;background:#fff;padding:16px;border-radius:18px;box-shadow:var(--shadow);margin-bottom:14px}
+.qr-box img{width:180px;height:180px;display:block}
+.qr-box--lg img{width:220px;height:220px}
+
+/* ---------- Footer ---------- */
+.footer{margin-top:clamp(50px,8vw,90px);padding-top:36px;border-top:1px solid rgba(255,255,255,.14);
+  text-align:center;color:rgba(255,255,255,.85)}
+.footer strong{color:#fff}
+.footer__small{font-size:.85rem;opacity:.6;margin-top:8px}
+
+/* ---------- QR modal ---------- */
+.qr-modal{position:fixed;inset:0;z-index:210;background:rgba(7,20,12,.9);backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:.35s var(--ease);padding:20px}
+.qr-modal.open{opacity:1;visibility:visible}
+.qr-modal__box{background:var(--cream);border-radius:var(--radius-lg);padding:34px;max-width:380px;width:100%;
+  text-align:center;position:relative;box-shadow:var(--shadow)}
+.qr-modal__box h3{font-family:var(--font-head);color:var(--green-900);margin-bottom:18px}
+.qr-modal__close{position:absolute;top:14px;right:18px;font-size:1.4rem;color:var(--muted)}
+.qr-modal__label{display:block;text-align:left;font-size:.82rem;font-weight:700;color:var(--muted);margin:18px 0 6px}
+.qr-modal__input{width:100%;padding:11px 14px;border:1.5px solid rgba(46,158,102,.3);border-radius:12px;
+  font-family:inherit;font-size:.9rem;margin-bottom:14px}
+.qr-modal__input:focus{outline:none;border-color:var(--green-500)}
+.qr-modal__hint{font-size:.8rem;color:var(--muted);margin-top:16px;line-height:1.5}
+.qr-modal__status{font-size:.82rem;font-weight:700;color:var(--green-600);margin:10px 0 4px;min-height:1em}
+.qr-modal__actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn--ghost{background:transparent;border:1.5px solid rgba(46,158,102,.4);color:var(--green-700)}
+.btn--ghost:hover{background:var(--green-600);color:#fff;border-color:var(--green-600)}
+
+/* ============================================================
+   REVEAL АНІМАЦІЇ
+   ============================================================ */
+.reveal{opacity:0;transform:translateY(46px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.reveal[data-reveal="left"]{transform:translateX(-60px)}
+.reveal[data-reveal="right"]{transform:translateX(60px)}
+.reveal.in{opacity:1;transform:none}
+/* глави в'їжджають з боку відповідно до layout */
+.chapter{opacity:0;transform:translateY(50px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.chapter.in{opacity:1;transform:none}
+
+/* ============================================================
+   АДАПТИВ
+   ============================================================ */
+@media (max-width:1024px){
+  .nav__links{display:none}
+  .nav__burger{display:flex}
+  .nav__links.open{
+    display:flex;flex-direction:column;position:absolute;top:100%;right:18px;left:18px;
+    background:rgba(11,40,24,.96);backdrop-filter:blur(14px);border-radius:18px;padding:14px;margin-top:8px;
+    box-shadow:var(--shadow);
+  }
+  .nav__links.open a{padding:12px 16px}
+  .results{grid-template-columns:repeat(2,1fr)}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .masonry{column-count:2}
+}
+@media (max-width:760px){
+  .contacts__grid{grid-template-columns:1fr}
+  .results,.kpis{grid-template-columns:1fr}
+  .masonry{column-count:1}
+  .hero{min-height:90svh}
+  /* документальні глави — одна колонка, хребет ліворуч */
+  .story{padding-left:34px}
+  .story__spine{left:8px;transform:none}
+  .chapter{grid-template-columns:1fr;gap:18px;padding-block:34px}
+  .chapter:nth-child(even) .chapter__media{order:0}
+  .chapter:nth-child(even) .chapter__text{order:0;text-align:left}
+  .chapter::before{left:-26px;top:38px}
+  .roadmap a{font-size:.8rem;padding:8px 13px}
+  /* Hero та кіно-сцени: фото заповнює екран (без порожніх смуг) */
+  .hero__slide-img{object-fit:cover}
+  .climax__bg img{object-fit:cover}
+  .hero__title{font-size:clamp(2.7rem,12.5vw,3.6rem)}
+  .hero__subtitle{font-size:1.02rem}
+  .climax{height:90svh;min-height:480px}
+  .climax__line{font-size:clamp(1.5rem,7vw,2.3rem)}
+  /* Навігація: компактний бренд, QR лише іконка, бургер не обрізається */
+  .nav{padding:11px 14px}
+  .nav__brand{font-size:.88rem;gap:7px}
+  .nav__leaf{font-size:1.05rem}
+  .nav__actions{gap:8px}
+  .nav__qr{padding:8px 10px;gap:0}
+  .nav__qr span{display:none}
+}
+
+/* ============================================================
+   MOTION DESIGN (Lenis + GSAP ScrollTrigger)
+   ============================================================ */
+/* Lenis smooth scroll */
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
+.lenis.lenis-stopped{overflow:hidden}
+
+/* Титрова поява тексту (по словах) */
+/* Титрова поява заголовків по словах (керується класом .in через CSS — надійно) */
+.word{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.06em}
+.word__i{display:inline-block;transform:translateY(110%);will-change:transform;
+  transition:transform .7s var(--ease);transition-delay:calc(var(--wi,0) * .045s)}
+.in .word__i{transform:translateY(0)}
+
+/* Поетапна поява карток / пунктів (через .in контейнера) */
+.kpi,.result-card{opacity:0;transform:translateY(34px);
+  transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.kpis.in .kpi,.results.in .result-card{opacity:1;transform:none}
+.kpis.in .kpi:nth-child(2),.results.in .result-card:nth-child(2){transition-delay:.08s}
+.kpis.in .kpi:nth-child(3),.results.in .result-card:nth-child(3){transition-delay:.16s}
+.kpis.in .kpi:nth-child(4),.results.in .result-card:nth-child(4){transition-delay:.24s}
+.results.in .result-card:nth-child(5){transition-delay:.32s}
+.results.in .result-card:nth-child(6){transition-delay:.40s}
+.roadmap li{opacity:0;transform:translateY(16px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.roadmap.in li{opacity:1;transform:none}
+.roadmap.in li:nth-child(2){transition-delay:.05s}
+.roadmap.in li:nth-child(3){transition-delay:.10s}
+.roadmap.in li:nth-child(4){transition-delay:.15s}
+.roadmap.in li:nth-child(5){transition-delay:.20s}
+.roadmap.in li:nth-child(6){transition-delay:.25s}
+.roadmap.in li:nth-child(7){transition-delay:.30s}
+.roadmap.in li:nth-child(8){transition-delay:.35s}
+.roadmap.in li:nth-child(9){transition-delay:.40s}
+
+/* Коли активний GSAP — resting-стан видимий, приховування робить сам GSAP (gsap.from).
+   Так кінематографічна поява працює, а контент ніколи не «застрягає» прихованим. */
+.has-gsap .reveal,
+.has-gsap .chapter,
+.has-gsap .kpi,
+.has-gsap .result-card,
+.has-gsap .roadmap li,
+.has-gsap .climax__line{opacity:1;transform:none;filter:none;transition:none}
+.has-gsap .word__i{transform:none;transition:none}
+.has-gsap .hero__tile{animation:none;opacity:1;transform:none}
+.has-gsap .hero__tile img{animation:none}
+
+/* Кінематографічна pinned-сцена */
+.climax{position:relative;height:100vh;min-height:560px;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;background:#07140c}
+.climax__bg{position:absolute;inset:0;z-index:0;overflow:hidden;background:#07140c}
+/* розмита підкладка заповнює екран, а саме фото показуємо ПОВНІСТЮ */
+.climax__bg-blur{position:absolute;inset:-5%;background-size:cover;background-position:center;
+  filter:blur(34px) brightness(.4) saturate(1.15);transform:scale(1.12);will-change:transform}
+.climax__bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
+  filter:drop-shadow(0 24px 80px rgba(0,0,0,.5))}
+.climax__overlay{position:absolute;inset:0;z-index:1;
+  background:radial-gradient(120% 85% at 50% 50%,rgba(7,20,12,.30),rgba(7,20,12,.88))}
+.climax__lines{position:relative;z-index:2;text-align:center;padding:20px;max-width:1040px}
+.climax__line{font-family:var(--font-head);font-weight:700;color:#fff;line-height:1.12;
+  font-size:clamp(1.7rem,5.5vw,3.9rem);margin:.12em 0;text-shadow:0 12px 44px rgba(0,0,0,.55)}
+.climax__line--accent{color:var(--ua-yellow)}
+.climax__line{opacity:0;transform:translateY(48px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.climax.in .climax__line{opacity:1;transform:none}
+.climax.in .climax__line:nth-child(2){transition-delay:.28s}
+.climax.in .climax__line:nth-child(3){transition-delay:.56s}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .reveal,.chapter,.hero__tile{opacity:1;transform:none}
+  .chapter__media img,.hero__tile img{transform:none}
+  .climax{height:auto;min-height:60vh;padding:80px 0}
+}

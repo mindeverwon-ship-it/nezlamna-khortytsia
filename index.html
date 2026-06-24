@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Незламна Хортиця — документальна історія відродження парку</title>
+
+  <!-- SEO -->
+  <meta name="description" content="«Незламна Хортиця» — документальна історія відродження парку в Запоріжжі: від занедбаної території до зеленої зони. Висаджено понад 100 дерев, очищено територію, встановлено годівнички. Спільна праця небайдужих людей." />
+  <meta name="keywords" content="Незламна Хортиця, Хортиця, Запоріжжя, відродження парку, висадка дубів, парк Шевченка, Поліція Запоріжжя, Служба освітньої безпеки, Байда, ДСНС, еко-локація, годівнички" />
+  <meta name="author" content="Незламна Хортиця" />
+  <meta name="theme-color" content="#0B2818" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://mindeverwon-ship-it.github.io/nezlamna-khortytsia/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="uk_UA" />
+  <meta property="og:site_name" content="Незламна Хортиця" />
+  <meta property="og:url" content="https://mindeverwon-ship-it.github.io/nezlamna-khortytsia/" />
+  <meta property="og:title" content="Незламна Хортиця" />
+  <meta property="og:description" content="Документальна історія людей, які власними руками повернули життя парку." />
+  <meta property="og:image" content="https://mindeverwon-ship-it.github.io/nezlamna-khortytsia/images/photos/photo-12.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Незламна Хортиця" />
+  <meta name="twitter:description" content="Документальна історія відродження парку." />
+  <meta name="twitter:image" content="https://mindeverwon-ship-it.github.io/nezlamna-khortytsia/images/photos/photo-12.jpg" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="preload" as="image" href="images/photos/photo-01.jpg" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌳</text></svg>" />
+
+  <!-- Structured data (SEO) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Незламна Хортиця — історія відродження парку",
+    "description": "Документальна історія відродження парку завдяки спільним зусиллям небайдужих людей Запоріжжя.",
+    "inLanguage": "uk",
+    "image": "images/photos/photo-12.jpg",
+    "author": { "@type": "Organization", "name": "Незламна Хортиця" }
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Прогрес прокрутки -->
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <!-- Навігація -->
+  <header class="nav" id="nav">
+    <a href="#hero" class="nav__brand">
+      <span class="nav__leaf">🌳</span>
+      <span>Незламна&nbsp;Хортиця</span>
+    </a>
+    <nav class="nav__links" id="navLinks" aria-label="Основна навігація">
+      <a href="#story">Історія</a>
+      <a href="#results">Результати</a>
+      <a href="#gallery">Галерея</a>
+      <a href="#contacts">Контакти</a>
+    </nav>
+    <div class="nav__actions">
+      <button class="nav__qr" id="qrBtn" title="Поділитися / QR-код" aria-label="Показати QR-код">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm13-2h3v2h-3v-2zm-5 0h3v3h-2v-1h-1v-2zm5 5h3v3h-3v-1h-2v-2h2v0zm-5 0h2v3h-2v-3z"/></svg>
+        <span>QR</span>
+      </button>
+      <button class="nav__burger" id="burger" aria-label="Меню" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============ HERO (мозаїка з 4 фото) ============ -->
+  <section class="hero" id="hero">
+    <!-- Повнокадрове слайдшоу: фото показуються ПОВНІСТЮ, тло — розмита підкладка -->
+    <div class="hero__slides" id="heroSlides" aria-hidden="true">
+      <div class="hero__slide is-active">
+        <div class="hero__slide-bg" style="background-image:url(images/photos/photo-01-1280.jpg)"></div>
+        <img class="hero__slide-img" src="images/photos/photo-01.jpg"
+             srcset="images/photos/photo-01-1280.jpg 1280w, images/photos/photo-01.jpg 2048w"
+             sizes="100vw" alt="" fetchpriority="high" decoding="async" />
+      </div>
+      <div class="hero__slide">
+        <div class="hero__slide-bg" style="background-image:url(images/photos/photo-06-1280.jpg)"></div>
+        <img class="hero__slide-img" src="images/photos/photo-06.jpg"
+             srcset="images/photos/photo-06-1280.jpg 1280w, images/photos/photo-06.jpg 2048w"
+             sizes="100vw" alt="" loading="lazy" decoding="async" />
+      </div>
+      <div class="hero__slide">
+        <div class="hero__slide-bg" style="background-image:url(images/photos/photo-13-1280.jpg)"></div>
+        <img class="hero__slide-img" src="images/photos/photo-13.jpg"
+             srcset="images/photos/photo-13-1280.jpg 1280w, images/photos/photo-13.jpg 2048w"
+             sizes="100vw" alt="" loading="lazy" decoding="async" />
+      </div>
+      <div class="hero__slide">
+        <div class="hero__slide-bg" style="background-image:url(images/photos/photo-12-1280.jpg)"></div>
+        <img class="hero__slide-img" src="images/photos/photo-12.jpg"
+             srcset="images/photos/photo-12-1280.jpg 1280w, images/photos/photo-12.jpg 2048w"
+             sizes="100vw" alt="" loading="lazy" decoding="async" />
+      </div>
+      <div class="hero__slide">
+        <div class="hero__slide-bg" style="background-image:url(images/photos/photo-03-1280.jpg)"></div>
+        <img class="hero__slide-img" src="images/photos/photo-03.jpg"
+             srcset="images/photos/photo-03-1280.jpg 1280w, images/photos/photo-03.jpg 2048w"
+             sizes="100vw" alt="" loading="lazy" decoding="async" />
+      </div>
+    </div>
+    <div class="hero__overlay"></div>
+
+    <div class="hero__content">
+      <span class="hero__kicker">Документальна історія • 2026</span>
+      <h1 class="hero__title">Незламна<br/>Хортиця</h1>
+      <p class="hero__subtitle">Історія людей, які власними руками повернули життя парку</p>
+      <a href="#story" class="btn btn--accent">Дізнатися більше</a>
+    </div>
+
+    <a href="#story" class="hero__scroll" aria-label="Прокрутити вниз">
+      <span class="hero__mouse"><span></span></span>
+      <span class="hero__scroll-text">Прокрутіть</span>
+    </a>
+    <div class="leaves" aria-hidden="true"></div>
+  </section>
+
+  <!-- ============ КІНО-СЦЕНА (cold open) ============ -->
+  <section class="climax climax--intro" id="scene-intro" aria-label="Вступна сцена">
+    <div class="climax__bg" id="introBg">
+      <div class="climax__bg-blur" style="background-image:url(images/photos/photo-01-1280.jpg)"></div>
+      <img src="images/photos/photo-01.jpg"
+           srcset="images/photos/photo-01-1280.jpg 1280w, images/photos/photo-01.jpg 2048w"
+           sizes="100vw" alt="" loading="lazy" decoding="async" />
+    </div>
+    <div class="climax__overlay"></div>
+    <div class="climax__lines">
+      <p class="climax__line">Це історія про незламність.</p>
+      <p class="climax__line climax__line--accent">І про тих, хто повертає життя.</p>
+    </div>
+  </section>
+
+  <!-- ============ ДОКУМЕНТАЛЬНА ІСТОРІЯ ============ -->
+  <section class="section section--story" id="story">
+    <div class="container">
+      <div class="section__head reveal">
+        <span class="eyebrow">Шлях відродження</span>
+        <h2 class="h2">Як це було</h2>
+        <p class="section__sub">Прокрутіть, щоб пройти всю історію — від занедбаної території до живої зеленої зони.</p>
+      </div>
+
+      <!-- Швидка навігація етапами (без нумерації) -->
+      <ul class="roadmap reveal" aria-label="Розділи історії">
+        <li><a href="#ch1">Занедбана територія</a></li>
+        <li><a href="#ch2">Ідея змін</a></li>
+        <li><a href="#ch3">Прибирання</a></li>
+        <li><a href="#ch4">Спільна робота</a></li>
+        <li><a href="#ch5">Висадка дерев</a></li>
+        <li><a href="#ch6">Полив і догляд</a></li>
+        <li><a href="#ch7">Годівнички</a></li>
+        <li><a href="#ch8">Сучасний вигляд</a></li>
+        <li><a href="#ch9">Плани</a></li>
+      </ul>
+    </div>
+
+    <!-- Документальні розділи -->
+    <div class="story" id="storyTrack">
+      <div class="story__spine" aria-hidden="true"><span class="story__spine-fill" id="spineFill"></span></div>
+
+      <article class="chapter" id="ch1">
+        <figure class="chapter__media" data-parallax="0.06">
+          <img src="images/photos/photo-05.jpg"
+               srcset="images/photos/photo-05-1280.jpg 1280w, images/photos/photo-05.jpg 2048w"
+               sizes="(max-width:760px) 92vw, 46vw"
+               alt="Громада зібралася на занедбаній території парку перед початком робіт" loading="lazy" decoding="async" />
+          <figcaption class="chapter__caption">Спільний старт на місці майбутнього оновлення</figcaption>
+        </figure>
+        <div class="chapter__text">
+          <span class="chapter__step">З чого все починалося</span>
+          <h3>Занедбана територія</h3>
+          <p>Влітку 2025 року ворожі обстріли та пожежі знищили значну частину Хортиці. Там, де роками зростали дерева, залишилися згарища, чагарник і сміття.</p>
+          <p>Саме серед цієї руїни народилася ідея — не просто прибрати, а відродити. Повернути парку життя власними руками.</p>
+        </div>
+      </article>
+
+      <article class="chapter" id="ch2">
+        <figure class="chapter__media" data-parallax="0.06">
+          <img src="images/photos/photo-07.jpg"
+               srcset="images/photos/photo-07-1280.jpg 1280w, images/photos/photo-07.jpg 2048w"
+               sizes="(max-width:760px) 92vw, 46vw"
+               alt="Представник поліції Запоріжжя звертається до учасників проєкту" loading="lazy" decoding="async" />
+          <figcaption class="chapter__caption">Поліція Запоріжжя</figcaption>
+        </figure>
+        <div class="chapter__text">
+          <span class="chapter__step">Народження ідеї</span>
+          <h3>Ідея змін</h3>
+          <p>Задум жив у серці давно, та особливого змісту набув того літа. Ініціативу підтримали небайдужі люди — і вона переросла у справу серця.</p>
+          <p>Мета була простою й сильною: об'єднатися й створити щось своє. Живе. Сильне. Для нас і для тих, хто прийде після.</p>
+        </div>
+      </article>
+
+      <article class="chapter" id="ch3">
+        <figure class="chapter__media" data-parallax="0.06">
+          <img src="images/photos/photo-01.jpg"
+               srcset="images/photos/photo-01-1280.jpg 1280w, images/photos/photo-01.jpg 2048w"
+               sizes="(max-width:760px) 92vw, 46vw"
+               alt="Рятувальник ДСНС виносить колоду під час розчищення території" loading="lazy" decoding="async" />
+          <figcaption class="chapter__caption">Розчищення території від наслідків руйнувань</figcaption>
+        </figure>
+        <div class="chapter__text">
+          <span class="chapter__step">Перші кроки</span>
+          <h3>Початок прибирання</h3>
+          <p>Першими до роботи стали руки. Рятувальники, поліцейські, ветерани та небайдужі мешканці розчищали територію від сухостою, чагарнику й сміття.</p>
+          <p>Кожна винесена колода, кожен прибраний метр наближали парк до нового життя.</p>
+        </div>
+      </article>
+
+      <article class="chapter" id="ch4">
+        <figure class="chapter__media" data-parallax="0.06">
+          <img src="images/photos/photo-03.jpg"
+               srcset="images/photos/photo-03-1280.jpg 1280w, images/photos/photo-03.jpg 2048w"
+               sizes="(max-width:760px) 92vw, 46vw"
+               alt="Велике спільне фото учасників проєкту: громада, служби та ветерани" loading="lazy" decoding="async" />
+          <figcaption class="chapter__caption">Учасники проєкту — громада, служби та ветерани</figcaption>
+        </figure>
+        <div class="chapter__text">
+          <span class="chapter__step">Сила в єдності</span>
+          <h3>Спільна робота</h3>
+          <p>Навколо однієї мети зібралися сотні людей: поліція Запоріжжя, офіцери Служби освітньої безпеки, ветерани війни, рятувальники ДСНС, учні громад, юнацький рух «Байда» та команда заповідника «Хортиця».</p>
+          <p>Покоління поряд — з лопатами в руках і вірою в серці.</p>
+        </div>
+      </article>
+
+      <article class="chapter" id="ch5">
+        <figure class="chapter__media" data-parallax="0.06">
+          <img src="images/photos/photo-06.jpg"
+               srcset="images/photos/photo-06-1280.jpg 1280w, images/photos/photo-06.jpg 2048w"
+               sizes="(max-width:760px) 92vw, 46vw"
+               alt="Команда з лопатами перед висадкою дубів" loading="lazy" decoding="async" />
+          <figcaption class="chapter__caption">Команда перед висадкою дубів</figcaption>
+        </figure>
+        <div class="chapter__text">
+          <span class="chapter__step">Нове життя</span>
+          <h3>Висадка понад 100 дерев</h3>
+          <p>У самому серці Запоріжжя разом висадили <strong>понад 100 саджанців дубів</strong> — символів сили, витривалості та незламності.</p>
+          <p>Кожне дерево отримало своє місце й свого опікуна. Так було закладено основу майбутньої дубової алеї.</p>
+        </div>
+      </article>
+
+      <article class="chapter" id="ch6">
+        <figure class="chapter__media" data-parallax="0.06">
+          <img src="images/photos/photo-02.jpg"
+               srcset="images/photos/photo-02-1280.jpg 1280w, images/photos/photo-02.jpg 2048w"
+               sizes="(max-width:760px) 92vw, 46vw"
+               alt="Підвезена вода у великих бочках для поливу молодих дерев" loading="lazy" decoding="async" />
+          <figcaption class="chapter__caption">Полив молодих дерев із підвезеної води</figcaption>
+        </figure>
+        <div class="chapter__text">
+          <span class="chapter__step">Турбота триває</span>
+          <h3>Полив та догляд</h3>
+          <p>Продовжуємо розпочате… Висаджені дубочки кріпнуть, а разом із ними міцнішає й наша віра — у розквіт Запорізького краю та всієї України.</p>
+          <p>Дерева потребують постійної уваги: воду підвозять у великих бочках, доглядають за кожним саджанцем. А парк поповнився ще <strong>10 саджанцями катальпи</strong> 🌳.</p>
+        </div>
+      </article>
+
+      <article class="chapter" id="ch7">
+        <figure class="chapter__media" data-parallax="0.06">
+          <img src="images/photos/photo-13.jpg"
+               srcset="images/photos/photo-13-1280.jpg 1280w, images/photos/photo-13.jpg 2048w"
+               sizes="(max-width:760px) 92vw, 46vw"
+               alt="Встановлення «готелю» для комах на дереві разом із дітьми" loading="lazy" decoding="async" />
+          <figcaption class="chapter__caption">Встановлення «готелів» для комах</figcaption>
+        </figure>
+        <div class="chapter__text">
+          <span class="chapter__step">Дім для природи</span>
+          <h3>Встановлення годівничок</h3>
+          <p>У парку з'явилася нова еко-локація — яскраві «готелі» для комах 🐞🐝 і годівнички для птахів. Діти разом з дорослими майстрували будиночки для тих, хто щодня непомітно допомагає природі жити та квітнути.</p>
+          <p>Говорили про біорізноманіття й дбайливе ставлення до світу. А поряд міцніли вже знайомі дубочки — стрункі та зелені.</p>
+        </div>
+      </article>
+
+      <article class="chapter" id="ch8">
+        <figure class="chapter__media" data-parallax="0.06">
+          <img src="images/photos/photo-12.jpg"
+               srcset="images/photos/photo-12-1280.jpg 1280w, images/photos/photo-12.jpg 2048w"
+               sizes="(max-width:760px) 92vw, 46vw"
+               alt="Учасники проєкту влітку серед зеленого оновленого парку" loading="lazy" decoding="async" />
+          <figcaption class="chapter__caption">Оновлений парк улітку</figcaption>
+        </figure>
+        <div class="chapter__text">
+          <span class="chapter__step">Сьогодення</span>
+          <h3>Сучасний вигляд території</h3>
+          <p>Те, що починалося серед згарищ, сьогодні зеленіє. Парк наповнився життям: молоді дерева, доглянуті стежки, еко-локації та люди, які приходять сюди разом.</p>
+          <blockquote class="pull">Незламність — це не лише вистояти.<br/><span>Це — здатність відроджуватись.</span></blockquote>
+        </div>
+      </article>
+
+      <article class="chapter" id="ch9">
+        <figure class="chapter__media" data-parallax="0.06">
+          <img src="images/photos/photo-15.jpg"
+               srcset="images/photos/photo-15-1280.jpg 1280w, images/photos/photo-15.jpg 2048w"
+               sizes="(max-width:760px) 92vw, 46vw"
+               alt="Діти біля встановленого «готелю» для комах — погляд у майбутнє" loading="lazy" decoding="async" />
+          <figcaption class="chapter__caption">Юне покоління — майбутнє парку</figcaption>
+        </figure>
+        <div class="chapter__text">
+          <span class="chapter__step">Попереду</span>
+          <h3>Плани на майбутнє</h3>
+          <p>Це лише початок. Попереду — нові еко-локації, постійний догляд за деревами та довготривала взаємодія заради збереження й розвитку Хортиці.</p>
+          <p>Маленькі кроки — великі зміни. І разом ми точно зможемо більше.</p>
+          <p class="next">Далі буде… 💙💛</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ КІНЕМАТОГРАФІЧНА СЦЕНА (pinned) ============ -->
+  <section class="climax" id="climax" aria-label="Підсумкова сцена">
+    <div class="climax__bg" id="climaxBg">
+      <div class="climax__bg-blur" style="background-image:url(images/photos/photo-12-1280.jpg)"></div>
+      <img src="images/photos/photo-12.jpg"
+           srcset="images/photos/photo-12-1280.jpg 1280w, images/photos/photo-12.jpg 2048w"
+           sizes="100vw" alt="Оновлений парк улітку" loading="lazy" decoding="async" />
+    </div>
+    <div class="climax__overlay"></div>
+    <div class="climax__lines" id="climaxLines">
+      <p class="climax__line">Понад 100 дерев.</p>
+      <p class="climax__line">Десятки небайдужих рук.</p>
+      <p class="climax__line climax__line--accent">Одна мета — повернути життя.</p>
+    </div>
+  </section>
+
+  <!-- ============ РЕЗУЛЬТАТИ СПІЛЬНОЇ ПРАЦІ ============ -->
+  <section class="section section--dark" id="results">
+    <div class="container">
+      <div class="section__head reveal">
+        <span class="eyebrow eyebrow--light">Підсумок</span>
+        <h2 class="h2 h2--light">Результати спільної праці</h2>
+        <p class="section__sub">Те, що вдалося зробити разом — у цифрах і справах.</p>
+      </div>
+
+      <div class="kpis reveal">
+        <div class="kpi"><span class="kpi__num" data-count="100" data-suffix="+">0</span><span class="kpi__label">висаджених дерев</span></div>
+        <div class="kpi"><span class="kpi__num" data-count="10" data-suffix="">0</span><span class="kpi__label">саджанців катальпи</span></div>
+        <div class="kpi"><span class="kpi__num" data-count="9" data-suffix="">0</span><span class="kpi__label">етапів відродження</span></div>
+        <div class="kpi"><span class="kpi__num" data-count="1" data-suffix="">0</span><span class="kpi__label">оживлений парк</span></div>
+      </div>
+
+      <div class="results reveal">
+        <article class="result-card">
+          <span class="result-card__ico">🌳</span>
+          <h3>Понад 100 висаджених дерев</h3>
+          <p>Дубова алея в серці Запоріжжя — символ сили та незламності.</p>
+        </article>
+        <article class="result-card">
+          <span class="result-card__ico">🧹</span>
+          <h3>Очищено значну територію</h3>
+          <p>Прибрано сухостій, чагарник і сміття, повернуто простір для життя.</p>
+        </article>
+        <article class="result-card">
+          <span class="result-card__ico">🐦</span>
+          <h3>Встановлено годівнички</h3>
+          <p>Годівнички для птахів та «готелі» для комах — підтримка біорізноманіття.</p>
+        </article>
+        <article class="result-card">
+          <span class="result-card__ico">🌱</span>
+          <h3>+10 саджанців катальпи</h3>
+          <p>Ініціативу підхопили інші — зелена зона зростає далі.</p>
+        </article>
+        <article class="result-card">
+          <span class="result-card__ico">💧</span>
+          <h3>Довгостроковий догляд</h3>
+          <p>Регулярний полив і турбота про кожне дерево протягом сезону.</p>
+        </article>
+        <article class="result-card">
+          <span class="result-card__ico">🌿</span>
+          <h3>Умови для розвитку</h3>
+          <p>Закладено основу для подальшого зростання зеленої зони парку.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ГАЛЕРЕЯ ============ -->
+  <section class="section" id="gallery">
+    <div class="container">
+      <div class="section__head reveal">
+        <span class="eyebrow">Фотохроніка</span>
+        <h2 class="h2">Історія в кадрах</h2>
+        <p class="section__sub">Кадри, з яких склалася ця історія. Натисніть, щоб відкрити на весь екран.</p>
+      </div>
+      <div class="masonry" id="masonry"></div>
+    </div>
+  </section>
+
+  <!-- ============ КОНТАКТИ ============ -->
+  <section class="section section--dark" id="contacts">
+    <div class="container contacts__grid">
+      <div class="reveal">
+        <span class="eyebrow eyebrow--light">Контакти</span>
+        <h2 class="h2 h2--light">Долучайтеся до незламних</h2>
+        <p class="section__sub">Стежте за історією відродження парку та долучайтеся до спільної справи.</p>
+
+        <ul class="contacts__list">
+          <li><span class="contacts__ico">📍</span><span>м. Запоріжжя, Парк ім. Тараса Шевченка</span></li>
+          <li><span class="contacts__ico">📞</span><a href="tel:+380669930864">+38 (066) 993-08-64</a></li>
+          <li><span class="contacts__ico">🔗</span><a href="https://www.facebook.com/vkgunpzp?locale=ru_RU" target="_blank" rel="noopener">Більше інформації — Facebook</a></li>
+        </ul>
+
+        <div class="contacts__socials">
+          <a href="https://www.facebook.com/vkgunpzp?locale=ru_RU" target="_blank" rel="noopener" aria-label="Facebook" class="soc soc--wide"><span>f</span> Facebook</a>
+        </div>
+      </div>
+
+      <div class="contacts__qr reveal" data-reveal="right">
+        <div class="qr-box" id="qrInline"></div>
+        <p>Наведіть камеру — і поділіться історією «Незламної Хортиці»</p>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <p>🌳 <strong>Незламна Хортиця</strong> — справа серця небайдужих людей Запоріжжя.</p>
+      <p class="footer__small">
+        <a href="https://www.facebook.com/vkgunpzp?locale=ru_RU" target="_blank" rel="noopener">Facebook</a>
+        &nbsp;·&nbsp; <a href="tel:+380669930864">+38 (066) 993-08-64</a>
+      </p>
+      <p class="footer__small">© <span id="year"></span>. Зроблено з любов'ю до Запорізького краю 💙💛</p>
+    </footer>
+  </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Перегляд фото">
+    <button class="lightbox__close" id="lbClose" aria-label="Закрити">✕</button>
+    <button class="lightbox__nav lightbox__prev" id="lbPrev" aria-label="Попереднє">‹</button>
+    <figure class="lightbox__fig">
+      <img id="lbImg" src="" alt="" />
+      <figcaption id="lbCap"></figcaption>
+    </figure>
+    <button class="lightbox__nav lightbox__next" id="lbNext" aria-label="Наступне">›</button>
+  </div>
+
+  <!-- QR modal -->
+  <div class="qr-modal" id="qrModal" aria-hidden="true" role="dialog" aria-label="QR-код сторінки">
+    <div class="qr-modal__box">
+      <button class="qr-modal__close" id="qrClose" aria-label="Закрити">✕</button>
+      <h3>Поділіться сторінкою</h3>
+      <div class="qr-box qr-box--lg" id="qrModalImg"></div>
+      <p class="qr-modal__status" id="qrStatus"></p>
+      <label class="qr-modal__label">Адреса для QR-коду:</label>
+      <input type="text" id="qrUrl" class="qr-modal__input" />
+      <div class="qr-modal__actions">
+        <button class="btn btn--accent btn--sm" id="qrUpdate">Оновити</button>
+        <button class="btn btn--ghost btn--sm" id="qrDownload">Завантажити PNG</button>
+      </div>
+      <p class="qr-modal__hint">Поки сайт не опубліковано, QR веде на ваш Facebook (працює одразу). Після публікації вставте сюди адресу сайту — і QR оновиться.</p>
+    </div>
+  </div>
+
+  <!-- Motion stack (Lenis smooth scroll + GSAP ScrollTrigger). Прогресивне покращення:
+       якщо CDN недоступний, main.js автоматично вмикає базові reveal-анімації. -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
