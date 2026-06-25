@@ -14,6 +14,7 @@
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const hasGSAP = !!(window.gsap && window.ScrollTrigger);
+  const isMobile = window.matchMedia('(max-width: 760px)').matches;
 
   const yearEl = $('#year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
@@ -155,6 +156,16 @@
     }, 5200);
   }
 
+  /* ============================================================ РАМКА ГЛАВ (розмите тло)
+     На мобільному фото показуємо ПОВНІСТЮ у рівній «кіно-рамці»; тло — розмита
+     підкладка з того ж фото, тож немає різнокаліберних квадратів і тонких смуг. */
+  $$('.chapter__media').forEach((fig) => {
+    const img = fig.querySelector('img');
+    if (!img) return;
+    const src = img.getAttribute('srcset')?.split(',')[0].trim().split(' ')[0] || img.getAttribute('src');
+    if (src) fig.style.setProperty('--bg', 'url("' + src + '")');
+  });
+
   /* ============================================================ ТИТРИ (слова) */
   if (!reduced) {
     $$('.h2, .chapter__text h3').forEach((h) => {
@@ -231,20 +242,24 @@
     ST.config({ ignoreMobileResize: true });
     document.documentElement.classList.add('has-gsap');
 
+    /* На мобільному прибираємо анімовані blur-фільтри — вони найбільше «лагають»
+       при скролі на телефонах. Рух (поява, зсув) лишається плавним. */
+    const fx = (v) => (isMobile ? undefined : v);
+
     const onEnter = (trigger, start) => ({ trigger, start: start || 'top 86%' });
 
     /* HERO — кінематографічна поява + вихід */
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
     tl.from('.hero__slides', { autoAlpha: 0, scale: 1.12, duration: 1.9 }, 0)
-      .from('.hero__title', { autoAlpha: 0, yPercent: 8, scale: 1.06, filter: 'blur(16px)', duration: 1.5 }, 0.5)
+      .from('.hero__title', { autoAlpha: 0, yPercent: 8, scale: 1.06, filter: fx('blur(16px)'), duration: 1.5 }, 0.5)
       .from('.hero__kicker', { autoAlpha: 0, y: 24, duration: 1 }, '-=1.1')
-      .from('.hero__subtitle', { autoAlpha: 0, y: 24, filter: 'blur(8px)', duration: 1 }, '-=0.8')
+      .from('.hero__subtitle', { autoAlpha: 0, y: 24, filter: fx('blur(8px)'), duration: 1 }, '-=0.8')
       .from('.hero .btn--accent', { autoAlpha: 0, y: 20, duration: 0.8 }, '-=0.7')
       .from('.hero__scroll', { autoAlpha: 0, duration: 0.8 }, '-=0.4');
 
-    gsap.to('.hero__slides', { yPercent: 10, scale: 1.08, ease: 'none',
+    gsap.to('.hero__slides', { yPercent: 10, scale: isMobile ? 1.04 : 1.08, ease: 'none',
       scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
-    gsap.to('.hero__content', { yPercent: -26, autoAlpha: 0, filter: 'blur(6px)', ease: 'none',
+    gsap.to('.hero__content', { yPercent: -26, autoAlpha: 0, filter: fx('blur(6px)'), ease: 'none',
       scrollTrigger: { trigger: '.hero', start: 'top top', end: '72% top', scrub: true } });
 
     /* Заголовки — титрова поява по словах */
@@ -257,7 +272,7 @@
 
     /* Параграфи / підписи — Fade Up + Blur */
     gsap.utils.toArray('.section__sub, .chapter__text p, .chapter__caption, .pull').forEach((p) => {
-      gsap.from(p, { autoAlpha: 0, y: 26, filter: 'blur(10px)', duration: 1.05, ease: 'power2.out',
+      gsap.from(p, { autoAlpha: 0, y: 26, filter: fx('blur(10px)'), duration: 1.05, ease: 'power2.out',
         scrollTrigger: onEnter(p, 'top 90%') });
     });
 
@@ -285,7 +300,7 @@
       const bg = sc.querySelector('.climax__bg-blur');
       if (bg) gsap.fromTo(bg, { scale: 1.12 }, { scale: 1.3, ease: 'none',
         scrollTrigger: { trigger: sc, start: 'top bottom', end: 'bottom top', scrub: true } });
-      gsap.from(sc.querySelectorAll('.climax__line'), { autoAlpha: 0, yPercent: 70, filter: 'blur(12px)',
+      gsap.from(sc.querySelectorAll('.climax__line'), { autoAlpha: 0, yPercent: 70, filter: fx('blur(12px)'),
         duration: 1, stagger: 0.3, ease: 'power2.out', scrollTrigger: onEnter(sc, 'top 62%') });
     });
 
