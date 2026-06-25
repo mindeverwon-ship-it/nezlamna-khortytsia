@@ -294,8 +294,8 @@
 
     /* КІНО-СЦЕНИ — наближення фону + поява рядків (усі .climax) */
     gsap.utils.toArray('.climax').forEach((sc) => {
-      const bg = sc.querySelector('.climax__bg-blur');
-      if (bg && !isMobile) gsap.fromTo(bg, { scale: 1.12 }, { scale: 1.3, ease: 'none',
+      const bg = sc.querySelector('.climax__bg img');
+      if (bg && !isMobile) gsap.fromTo(bg, { scale: 1.06 }, { scale: 1.18, ease: 'none',
         scrollTrigger: { trigger: sc, start: 'top bottom', end: 'bottom top', scrub: true } });
       gsap.from(sc.querySelectorAll('.climax__line'), { autoAlpha: 0, yPercent: 70, filter: fx('blur(12px)'),
         duration: 1, stagger: 0.3, ease: 'power2.out', scrollTrigger: onEnter(sc, 'top 62%') });
