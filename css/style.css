@@ -361,20 +361,23 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   .chapter:nth-child(even) .chapter__media{order:0}
   .chapter:nth-child(even) .chapter__text{order:0;text-align:left}
   .chapter::before{left:-23px;top:34px;width:14px;height:14px;border-width:3px}
-  /* Глави: рівна «кіно-рамка» — фото показуємо ПОВНІСТЮ (object-fit:contain),
-     порожнечу заповнює розмите тло з того ж фото. Жодних різнокаліберних квадратів. */
-  .chapter__media{aspect-ratio:4/3;max-height:52svh;display:flex;background:#0b2818}
-  .chapter__media::before{content:"";position:absolute;inset:-8%;z-index:0;
-    background:var(--bg) center/cover no-repeat;filter:blur(22px) brightness(.5) saturate(1.1);transform:scale(1.1)}
-  .chapter__media img{position:relative;z-index:1;width:100%;height:100%;object-fit:contain}
+  /* Глави: фото ПОВНІСТЮ, у натуральних пропорціях — без обрізки і без смуг-рамок.
+     Кадр займає всю ширину колонки, висота — за самим фото. */
+  .chapter__media{background:#0b2818;border-radius:var(--radius)}
+  .chapter__media img{width:100%;height:auto;display:block;max-height:84svh;object-fit:contain}
   .chapter__caption{padding:24px 14px 12px;font-size:.8rem}
   .chapter__text h3{font-size:clamp(1.45rem,6.5vw,1.9rem)}
   .chapter__text p{font-size:.96rem;line-height:1.6}
   .chapter__step{font-size:.68rem}
   .roadmap a{font-size:.8rem;padding:8px 13px}
-  /* Hero та кіно-сцени: фото заповнює екран (без порожніх смуг) */
-  .hero__slide-img{object-fit:cover}
-  .climax__bg img{object-fit:cover}
+  /* Hero та кіно-сцени: фото показуємо ПОВНІСТЮ (contain), тло — розмита підкладка.
+     Жодної обрізки слайдів. Підкладку робимо світлішою, а оверлей — легшим,
+     щоб саме фото було добре видно (а не суцільний темний фон). */
+  .hero__slide-bg{filter:blur(30px) brightness(.62) saturate(1.15)}
+  .hero__overlay{background:
+    radial-gradient(125% 80% at 50% 16%, transparent 42%, rgba(11,40,24,.42) 100%),
+    linear-gradient(180deg, rgba(11,40,24,.46) 0%, rgba(11,40,24,.18) 42%, rgba(11,40,24,.86) 100%)}
+  .hero{min-height:86svh}
   .hero__title{font-size:clamp(2.6rem,12vw,3.4rem)}
   .hero__title::after{width:64px;height:4px;margin-top:20px}
   .hero__subtitle{font-size:1rem;margin:20px auto 30px}
