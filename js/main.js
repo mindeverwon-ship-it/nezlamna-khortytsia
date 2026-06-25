@@ -156,16 +156,6 @@
     }, 5200);
   }
 
-  /* ============================================================ РАМКА ГЛАВ (розмите тло)
-     На мобільному фото показуємо ПОВНІСТЮ у рівній «кіно-рамці»; тло — розмита
-     підкладка з того ж фото, тож немає різнокаліберних квадратів і тонких смуг. */
-  $$('.chapter__media').forEach((fig) => {
-    const img = fig.querySelector('img');
-    if (!img) return;
-    const src = img.getAttribute('srcset')?.split(',')[0].trim().split(' ')[0] || img.getAttribute('src');
-    if (src) fig.style.setProperty('--bg', 'url("' + src + '")');
-  });
-
   /* ============================================================ ТИТРИ (слова) */
   if (!reduced) {
     $$('.h2, .chapter__text h3').forEach((h) => {
@@ -248,19 +238,26 @@
 
     const onEnter = (trigger, start) => ({ trigger, start: start || 'top 86%' });
 
-    /* HERO — кінематографічна поява + вихід */
+    /* HERO — кінематографічна поява + вихід.
+       На мобільному поява легша (без важкого scale 1.12), щоб не було «затупу» на старті. */
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-    tl.from('.hero__slides', { autoAlpha: 0, scale: 1.12, duration: 1.9 }, 0)
+    tl.from('.hero__slides', { autoAlpha: 0, scale: isMobile ? 1.04 : 1.12, duration: isMobile ? 1.2 : 1.9 }, 0)
       .from('.hero__title', { autoAlpha: 0, yPercent: 8, scale: 1.06, filter: fx('blur(16px)'), duration: 1.5 }, 0.5)
       .from('.hero__kicker', { autoAlpha: 0, y: 24, duration: 1 }, '-=1.1')
       .from('.hero__subtitle', { autoAlpha: 0, y: 24, filter: fx('blur(8px)'), duration: 1 }, '-=0.8')
       .from('.hero .btn--accent', { autoAlpha: 0, y: 20, duration: 0.8 }, '-=0.7')
       .from('.hero__scroll', { autoAlpha: 0, duration: 0.8 }, '-=0.4');
 
-    gsap.to('.hero__slides', { yPercent: 10, scale: isMobile ? 1.04 : 1.08, ease: 'none',
-      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
-    gsap.to('.hero__content', { yPercent: -26, autoAlpha: 0, filter: fx('blur(6px)'), ease: 'none',
-      scrollTrigger: { trigger: '.hero', start: 'top top', end: '72% top', scrub: true } });
+    /* scrub-паралакс hero рахується щокадру — на мобільному він дає ривки, тож лише на ПК */
+    if (!isMobile) {
+      gsap.to('.hero__slides', { yPercent: 10, scale: 1.08, ease: 'none',
+        scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+      gsap.to('.hero__content', { yPercent: -26, autoAlpha: 0, filter: 'blur(6px)', ease: 'none',
+        scrollTrigger: { trigger: '.hero', start: 'top top', end: '72% top', scrub: true } });
+    } else {
+      gsap.to('.hero__content', { yPercent: -18, autoAlpha: 0, ease: 'none',
+        scrollTrigger: { trigger: '.hero', start: 'top top', end: '70% top', scrub: 0.3 } });
+    }
 
     /* Заголовки — титрова поява по словах */
     gsap.utils.toArray('.h2, .chapter__text h3').forEach((h) => {
@@ -298,7 +295,7 @@
     /* КІНО-СЦЕНИ — наближення фону + поява рядків (усі .climax) */
     gsap.utils.toArray('.climax').forEach((sc) => {
       const bg = sc.querySelector('.climax__bg-blur');
-      if (bg) gsap.fromTo(bg, { scale: 1.12 }, { scale: 1.3, ease: 'none',
+      if (bg && !isMobile) gsap.fromTo(bg, { scale: 1.12 }, { scale: 1.3, ease: 'none',
         scrollTrigger: { trigger: sc, start: 'top bottom', end: 'bottom top', scrub: true } });
       gsap.from(sc.querySelectorAll('.climax__line'), { autoAlpha: 0, yPercent: 70, filter: fx('blur(12px)'),
         duration: 1, stagger: 0.3, ease: 'power2.out', scrollTrigger: onEnter(sc, 'top 62%') });
