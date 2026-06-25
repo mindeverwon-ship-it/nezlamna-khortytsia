@@ -370,14 +370,17 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   .chapter__text p{font-size:.96rem;line-height:1.6}
   .chapter__step{font-size:.68rem}
   .roadmap a{font-size:.8rem;padding:8px 13px}
-  /* Hero та кіно-сцени: фото показуємо ПОВНІСТЮ (contain), тло — розмита підкладка.
-     Жодної обрізки слайдів. Підкладку робимо світлішою, а оверлей — легшим,
-     щоб саме фото було добре видно (а не суцільний темний фон). */
-  .hero__slide-bg{filter:blur(30px) brightness(.62) saturate(1.15)}
+  /* Hero та кіно-сцени: повний кадр (contain) на суцільному ТЕМНОМУ тлі — без розмиття.
+     Прибираємо розмиті підкладки; за фото лишається рівний темний фон. */
+  .hero__slide-bg{display:none}
+  .climax__bg-blur{display:none}
+  /* Оверлей легкий у зоні фото (середина), темніший лише вгорі (під нав) і внизу,
+     щоб сам кадр було добре видно на темному тлі. */
   .hero__overlay{background:
-    radial-gradient(125% 80% at 50% 16%, transparent 42%, rgba(11,40,24,.42) 100%),
-    linear-gradient(180deg, rgba(11,40,24,.46) 0%, rgba(11,40,24,.18) 42%, rgba(11,40,24,.86) 100%)}
-  .hero{min-height:86svh}
+    linear-gradient(180deg,
+      rgba(11,40,24,.62) 0%, rgba(11,40,24,.12) 24%,
+      rgba(11,40,24,.12) 66%, rgba(11,40,24,.92) 100%)}
+  .hero{min-height:78svh}
   .hero__title{font-size:clamp(2.6rem,12vw,3.4rem)}
   .hero__title::after{width:64px;height:4px;margin-top:20px}
   .hero__subtitle{font-size:1rem;margin:20px auto 30px}
