@@ -353,22 +353,35 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   .contacts__grid{grid-template-columns:1fr}
   .results,.kpis{grid-template-columns:1fr}
   .masonry{column-count:1}
-  .hero{min-height:90svh}
+  .hero{min-height:90svh;padding:104px 18px 72px}
   /* документальні глави — одна колонка, хребет ліворуч */
-  .story{padding-left:34px}
-  .story__spine{left:8px;transform:none}
-  .chapter{grid-template-columns:1fr;gap:18px;padding-block:34px}
+  .story{padding-left:30px}
+  .story__spine{left:7px;transform:none}
+  .chapter{grid-template-columns:1fr;gap:16px;padding-block:30px}
   .chapter:nth-child(even) .chapter__media{order:0}
   .chapter:nth-child(even) .chapter__text{order:0;text-align:left}
-  .chapter::before{left:-26px;top:38px}
+  .chapter::before{left:-23px;top:34px;width:14px;height:14px;border-width:3px}
+  /* Глави: рівна «кіно-рамка» — фото показуємо ПОВНІСТЮ (object-fit:contain),
+     порожнечу заповнює розмите тло з того ж фото. Жодних різнокаліберних квадратів. */
+  .chapter__media{aspect-ratio:4/3;max-height:52svh;display:flex;background:#0b2818}
+  .chapter__media::before{content:"";position:absolute;inset:-8%;z-index:0;
+    background:var(--bg) center/cover no-repeat;filter:blur(22px) brightness(.5) saturate(1.1);transform:scale(1.1)}
+  .chapter__media img{position:relative;z-index:1;width:100%;height:100%;object-fit:contain}
+  .chapter__caption{padding:24px 14px 12px;font-size:.8rem}
+  .chapter__text h3{font-size:clamp(1.45rem,6.5vw,1.9rem)}
+  .chapter__text p{font-size:.96rem;line-height:1.6}
+  .chapter__step{font-size:.68rem}
   .roadmap a{font-size:.8rem;padding:8px 13px}
   /* Hero та кіно-сцени: фото заповнює екран (без порожніх смуг) */
   .hero__slide-img{object-fit:cover}
   .climax__bg img{object-fit:cover}
-  .hero__title{font-size:clamp(2.7rem,12.5vw,3.6rem)}
-  .hero__subtitle{font-size:1.02rem}
-  .climax{height:90svh;min-height:480px}
+  .hero__title{font-size:clamp(2.6rem,12vw,3.4rem)}
+  .hero__title::after{width:64px;height:4px;margin-top:20px}
+  .hero__subtitle{font-size:1rem;margin:20px auto 30px}
+  .hero__kicker{font-size:.66rem;letter-spacing:.22em;padding:7px 14px;margin-bottom:20px}
+  .climax{height:88svh;min-height:460px}
   .climax__line{font-size:clamp(1.5rem,7vw,2.3rem)}
+  .section__head{margin-bottom:30px}
   /* Навігація: компактний бренд, QR лише іконка, бургер не обрізається */
   .nav{padding:11px 14px}
   .nav__brand{font-size:.88rem;gap:7px}
