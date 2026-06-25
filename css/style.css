@@ -107,16 +107,14 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   align-items:center;justify-content:center;text-align:center;
   color:#fff;overflow:hidden;padding:120px 20px 80px;
 }
-/* Повнокадрове слайдшоу — фото показуються ПОВНІСТЮ, тло — розмита підкладка */
+/* Повнокадрове слайдшоу — фото заповнює увесь блок (cover), повний розмір, без швів */
 .hero__slides{position:absolute;inset:0;z-index:-2;overflow:hidden;background:#07140c}
 .hero__slide{position:absolute;inset:0;opacity:0;transition:opacity 1.8s ease}
 .hero__slide.is-active{opacity:1}
-.hero__slide-bg{position:absolute;inset:-5%;background-size:cover;background-position:center;
-  filter:blur(34px) brightness(.42) saturate(1.15);transform:scale(1.12)}
-.hero__slide.is-active .hero__slide-bg{animation:heroBgKen 8s ease-out forwards}
-.hero__slide-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
-  filter:drop-shadow(0 30px 90px rgba(0,0,0,.55))}
-@keyframes heroBgKen{from{transform:scale(1.12)}to{transform:scale(1.26)}}
+.hero__slide-bg{display:none}
+.hero__slide-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+.hero__slide.is-active .hero__slide-img{animation:heroKen 9s ease-out forwards}
+@keyframes heroKen{from{transform:scale(1.06)}to{transform:scale(1.14)}}
 .hero__overlay{
   position:absolute;inset:0;
   background:
@@ -361,26 +359,15 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   .chapter:nth-child(even) .chapter__media{order:0}
   .chapter:nth-child(even) .chapter__text{order:0;text-align:left}
   .chapter::before{left:-23px;top:34px;width:14px;height:14px;border-width:3px}
-  /* Глави: фото ПОВНІСТЮ, у натуральних пропорціях — без обрізки і без смуг-рамок.
-     Кадр займає всю ширину колонки, висота — за самим фото. */
-  .chapter__media{background:#0b2818;border-radius:var(--radius)}
-  .chapter__media img{width:100%;height:auto;display:block;max-height:84svh;object-fit:contain}
+  /* Глави: фото заповнює кадр повністю (cover) — повний розмір, рівні картки, без швів */
+  .chapter__media{aspect-ratio:4/3;background:#0b2818;border-radius:var(--radius);overflow:hidden}
+  .chapter__media img{width:100%;height:100%;display:block;object-fit:cover;object-position:center}
   .chapter__caption{padding:24px 14px 12px;font-size:.8rem}
   .chapter__text h3{font-size:clamp(1.45rem,6.5vw,1.9rem)}
   .chapter__text p{font-size:.96rem;line-height:1.6}
   .chapter__step{font-size:.68rem}
   .roadmap a{font-size:.8rem;padding:8px 13px}
-  /* Hero та кіно-сцени: повний кадр (contain) на суцільному ТЕМНОМУ тлі — без розмиття.
-     Прибираємо розмиті підкладки; за фото лишається рівний темний фон. */
-  .hero__slide-bg{display:none}
-  .climax__bg-blur{display:none}
-  /* Оверлей легкий у зоні фото (середина), темніший лише вгорі (під нав) і внизу,
-     щоб сам кадр було добре видно на темному тлі. */
-  .hero__overlay{background:
-    linear-gradient(180deg,
-      rgba(11,40,24,.62) 0%, rgba(11,40,24,.12) 24%,
-      rgba(11,40,24,.12) 66%, rgba(11,40,24,.92) 100%)}
-  .hero{min-height:78svh}
+  /* Hero та кіно-сцени заповнюють екран (cover) — базові правила; тут лише розміри тексту */
   .hero__title{font-size:clamp(2.6rem,12vw,3.4rem)}
   .hero__title::after{width:64px;height:4px;margin-top:20px}
   .hero__subtitle{font-size:1rem;margin:20px auto 30px}
@@ -449,11 +436,9 @@ html.lenis,html.lenis body{height:auto}
 .climax{position:relative;height:100vh;min-height:560px;overflow:hidden;
   display:flex;align-items:center;justify-content:center;background:#07140c}
 .climax__bg{position:absolute;inset:0;z-index:0;overflow:hidden;background:#07140c}
-/* розмита підкладка заповнює екран, а саме фото показуємо ПОВНІСТЮ */
-.climax__bg-blur{position:absolute;inset:-5%;background-size:cover;background-position:center;
-  filter:blur(34px) brightness(.4) saturate(1.15);transform:scale(1.12);will-change:transform}
-.climax__bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
-  filter:drop-shadow(0 24px 80px rgba(0,0,0,.5))}
+/* фото заповнює увесь блок (cover) — повний розмір, без рамок і швів */
+.climax__bg-blur{display:none}
+.climax__bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;will-change:transform}
 .climax__overlay{position:absolute;inset:0;z-index:1;
   background:radial-gradient(120% 85% at 50% 50%,rgba(7,20,12,.30),rgba(7,20,12,.88))}
 .climax__lines{position:relative;z-index:2;text-align:center;padding:20px;max-width:1040px}
