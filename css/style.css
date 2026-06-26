@@ -367,7 +367,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   .chapter__text p{font-size:.96rem;line-height:1.6}
   .chapter__step{font-size:.68rem}
   .roadmap a{font-size:.8rem;padding:8px 13px}
-  /* Hero та кіно-сцени заповнюють екран (cover) — базові правила; тут лише розміри тексту */
+  /* Hero та кіно-сцени заповнюють екран (cover) — базові правила; тут лише розміри тексту.
+     Безперервний zoom фото вимикаємо на телефоні — менше навантаження, без лагів. */
+  .hero__slide.is-active .hero__slide-img{animation:none}
   .hero__title{font-size:clamp(2.6rem,12vw,3.4rem)}
   .hero__title::after{width:64px;height:4px;margin-top:20px}
   .hero__subtitle{font-size:1rem;margin:20px auto 30px}
