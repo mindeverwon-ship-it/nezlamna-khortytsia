@@ -145,14 +145,36 @@
   );
   $$('.kpi__num').forEach((c) => countObserver.observe(c));
 
-  /* ============================================================ HERO СЛАЙДШОУ */
+  /* ============================================================ HERO СЛАЙДШОУ
+     Усі слайди — position:absolute inset:0 (у вікні), тож loading=lazy не діє і
+     браузер тягнув би всі 5 великих фото одразу = лаги на старті. Тому
+     завантажуємо лише перше фото, а решту — ліниво, по одному наперед. */
   const heroSlides = $$('#heroSlides .hero__slide');
+  const loadHeroSlide = (i) => {
+    const img = heroSlides[i] && heroSlides[i].querySelector('.hero__slide-img');
+    if (img && img.dataset.src) {
+      if (img.dataset.srcset) img.srcset = img.dataset.srcset;
+      img.src = img.dataset.src;
+      delete img.dataset.src; delete img.dataset.srcset;
+    }
+  };
+  // зняти src/srcset з усіх, крім першого — щоб не вантажились на старті
+  heroSlides.forEach((s, i) => {
+    if (i === 0) return;
+    const img = s.querySelector('.hero__slide-img');
+    if (!img) return;
+    if (img.getAttribute('srcset')) { img.dataset.srcset = img.getAttribute('srcset'); img.removeAttribute('srcset'); }
+    if (img.getAttribute('src')) { img.dataset.src = img.getAttribute('src'); img.removeAttribute('src'); }
+  });
   if (heroSlides.length > 1 && !reduced) {
     let hi = 0;
+    // перший слайд вже видно — підвантажимо наступний наперед, коли браузер звільниться
+    (window.requestIdleCallback || window.setTimeout)(() => loadHeroSlide(1), 1500);
     setInterval(() => {
       heroSlides[hi].classList.remove('is-active');
       hi = (hi + 1) % heroSlides.length;
       heroSlides[hi].classList.add('is-active');
+      loadHeroSlide((hi + 1) % heroSlides.length); // готуємо наступний наперед
     }, 5200);
   }
 
@@ -239,10 +261,11 @@
     const onEnter = (trigger, start) => ({ trigger, start: start || 'top 86%' });
 
     /* HERO — кінематографічна поява + вихід.
-       На мобільному поява легша (без важкого scale 1.12), щоб не було «затупу» на старті. */
+       Фото з'являється ЛИШЕ через прозорість (без scale повноекранного кадру) —
+       масштабування великого фото на старті найбільше «душить» завантаження. */
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-    tl.from('.hero__slides', { autoAlpha: 0, scale: isMobile ? 1.04 : 1.12, duration: isMobile ? 1.2 : 1.9 }, 0)
-      .from('.hero__title', { autoAlpha: 0, yPercent: 8, scale: 1.06, filter: fx('blur(16px)'), duration: 1.5 }, 0.5)
+    tl.from('.hero__slides', { autoAlpha: 0, duration: isMobile ? 0.8 : 1.2 }, 0)
+      .from('.hero__title', { autoAlpha: 0, yPercent: 8, scale: 1.06, filter: fx('blur(16px)'), duration: 1.5 }, 0.4)
       .from('.hero__kicker', { autoAlpha: 0, y: 24, duration: 1 }, '-=1.1')
       .from('.hero__subtitle', { autoAlpha: 0, y: 24, filter: fx('blur(8px)'), duration: 1 }, '-=0.8')
       .from('.hero .btn--accent', { autoAlpha: 0, y: 20, duration: 0.8 }, '-=0.7')
@@ -317,8 +340,6 @@
       .forEach((el) => guard.observe(el));
 
     window.addEventListener('load', () => ST.refresh());
-    setTimeout(() => ST.refresh(), 1200);
-    setTimeout(() => ST.refresh(), 2600);
   }
 
   /* ---------- Базовий режим (без GSAP): IntersectionObserver + CSS ---------- */
